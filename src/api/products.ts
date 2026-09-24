@@ -15,7 +15,7 @@ export interface Product {
   category: ProductCategory;
 }
 
-// GET /products — получение списка всех продуктов
+// GET /products — получение продуктов по id
 export const getProducts = async () => {
   return apiClient.get<Product[]>('/products');
 };

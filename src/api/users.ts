@@ -21,13 +21,13 @@ export interface User {
     avatar?: Avatar [],
 }
 
-// GET /users — получение списка всех продуктов
+// GET /users — получение списка всех пользователей
 export const getUsers = async () => {
   return apiClient.get<User[]>('/users');
 };
 
-// GET /users/id — получение списка всех продуктов
+// GET /users/id — получение пользователей по id
 export const getUserById = async (id: number) => {
-  return apiClient.get<User[]>(`/users/${id}`);
+  return apiClient.get<User>(`/users/${id}`);
 };
 
