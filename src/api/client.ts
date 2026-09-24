@@ -28,7 +28,7 @@ apiClient.interceptors.request.use(
 
 // Перехватчик ответов: возвращаем сразу данные, а не полный ответ axios
 apiClient.interceptors.response.use(
-  (response: AxiosResponse) => response.data,
+  (response: AxiosResponse) => response,
   (error) => {
     // Здесь можно централизованно обрабатывать ошибки (401, 500 и т.д.)
     console.error('API error:', error?.response?.data || error.message);

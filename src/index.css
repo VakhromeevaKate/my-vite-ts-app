@@ -109,3 +109,16 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+.usersContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.userCard {
+  background-color: cornsilk;
+  border-radius: 12px;
+  width: 150px;
+}
