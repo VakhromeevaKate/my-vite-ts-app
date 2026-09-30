@@ -1,51 +1,46 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import  { getUsers, type User } from './api/users';
-
-const DUMMY_PICTURE = 'https://thumbs.dreamstime.com/b/none-102846161.jpg?w=768';
+import { getBlogPosts, type BlogPost } from './api/blogPosts';
 
 function App() {
-  const [users, setUsers] = useState<User[]>([]);
+  const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const loadUserList = () => {
+  const loadPostList = () => {
     setLoading(true);
-    getUsers().then((userList) => {
-      if (userList) {
+    getBlogPosts().then((postList) => {
+      if (postList) {
         setTimeout(() => {
-          setUsers(userList.data);
-        }, 10000);
+          setPosts(postList.data);
+        }, 1000);
       }
     }).finally(() => setLoading(false));
   }
 
   useEffect(() => {
-    loadUserList()
+    loadPostList()
   }, []);
 
   return (
     <>
       <section id="center">
         <div>
-          <h1>Users list</h1>
+          <h1>Blog posts list</h1>
         </div>
         <button
           type="button"
           className="counter"
-          onClick={() => loadUserList()}
+          onClick={() => loadPostList()}
         >
-          Update user list
+          Update post list
         </button>
         <div className='usersContainer'>
-          {loading && <h1>Users list loading...</h1>}
-          {!loading && users.map((user) => (
-            <div key={user.id} className='userCard'>
-              <div>{user.firstName} {user.lastName}</div>
-              <div>
-                {user.avatar?.map((avt) => (
-                  <img key={avt.uid} height={100} width={100} src={DUMMY_PICTURE} />)
-                )}
-              </div>
+          {loading && <h1>Blog posts loading...</h1>}
+          {!loading && posts.map((post) => (
+            <div key={post.id} className='userCard'>
+              <div><b>{post.title}</b></div>
+              <div>Status: {post.status}</div>
+              <div>Category id: {post.category?.id}</div>
             </div>
           ))}
         </div>
