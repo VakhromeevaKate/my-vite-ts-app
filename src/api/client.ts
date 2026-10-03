@@ -1,10 +1,10 @@
 import axios, { type AxiosInstance, type AxiosResponse } from 'axios';
 
-// Базовый URL фейкового API
+// URL фейкового API
 const API_BASE_URL = 'https://api.fake-rest.refine.dev';
 
-// Создаём экземпляр axios с настройками по умолчанию
-const apiClient: AxiosInstance = axios.create({
+// axios 
+export const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
   timeout: 10000,
   headers: {
@@ -12,7 +12,7 @@ const apiClient: AxiosInstance = axios.create({
   },
 });
 
-// Перехватчик запросов (можно добавить токен авторизации при необходимости)
+// Перехватчик 
 apiClient.interceptors.request.use(
   (config) => {
     // Например, если понадобится авторизация:
