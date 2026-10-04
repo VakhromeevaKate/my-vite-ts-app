@@ -1,57 +1,21 @@
-import { useState, useEffect } from 'react'
-import './App.css'
-import  { getUsers, type User } from './api/users';
-
-const DUMMY_PICTURE = 'https://thumbs.dreamstime.com/b/none-102846161.jpg?w=768';
+import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
+import { UsersPage } from './pages/UsersPage';
+import { PostsPage } from './pages/PostsPage';
 
 function App() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const loadUserList = () => {
-    setLoading(true);
-    getUsers().then((userList) => {
-      if (userList) {
-        setTimeout(() => {
-          setUsers(userList.data);
-        }, 10000);
-      }
-    }).finally(() => setLoading(false));
-  }
-
-  useEffect(() => {
-    loadUserList()
-  }, []);
-
   return (
-    <>
-      <section id="center">
-        <div>
-          <h1>Users list</h1>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => loadUserList()}
-        >
-          Update user list
-        </button>
-        <div className='usersContainer'>
-          {loading && <h1>Users list loading...</h1>}
-          {!loading && users.map((user) => (
-            <div key={user.id} className='userCard'>
-              <div>{user.firstName} {user.lastName}</div>
-              <div>
-                {user.avatar?.map((avt) => (
-                  <img key={avt.uid} height={100} width={100} src={DUMMY_PICTURE} />)
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-    </>
-  )
+    <BrowserRouter>
+      <nav style={{ display: 'flex', gap: '20px', padding: '10px', background: '#f0f0f0' }}>
+        <NavLink to="/users">Пользователи</NavLink>
+        <NavLink to="/posts">Посты</NavLink>
+      </nav>
+
+      <Routes>
+        <Route path="/users" element={<UsersPage />} />
+        <Route path="/posts" element={<PostsPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

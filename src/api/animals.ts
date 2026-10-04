@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-// 1. Базовый клиент
 const apiClient = axios.create({
   baseURL: 'https://api.fake-rest.refine.dev',
   headers: {
@@ -8,44 +7,32 @@ const apiClient = axios.create({
   },
 });
 
-// 2. Типы (интерфейс для животного)
+// Оставляем интерфейс Animal, но поля теперь как у постов
 export interface Animal {
   id: number;
-  name: string;
-  type: string;
+  name: string;      // это будет title из API
+  description: string; // это будет body из API
   category: string;
-  status: string;
-  // ... можешь добавить другие поля, если они есть в API
 }
 
-// 3. Методы для работы с /animals
 export const animalsApi = {
-  // Получить всех
   getAll: async (): Promise<Animal[]> => {
-    const response = await apiClient.get<Animal[]>('/animals');
-    return response.data;
+    // Запрашиваем /posts, потому что /animals сломан
+    const response = await apiClient.get('/posts');
+    return response.data.map((post: any) => ({
+      id: post.id,
+      name: post.title,
+      description: post.body,
+      category: 'Пост', // просто для вида
+    }));
   },
-
-  // Получить одного по ID
   getOne: async (id: number): Promise<Animal> => {
-    const response = await apiClient.get<Animal>(`/animals/${id}`);
-    return response.data;
-  },
-
-  // Создать новое животное
-  create: async (data: Omit<Animal, 'id'>): Promise<Animal> => {
-    const response = await apiClient.post<Animal>('/animals', data);
-    return response.data;
-  },
-
-  // Обновить существующее
-  update: async (id: number, data: Partial<Animal>): Promise<Animal> => {
-    const response = await apiClient.put<Animal>(`/animals/${id}`, data);
-    return response.data;
-  },
-
-  // Удалить
-  delete: async (id: number): Promise<void> => {
-    await apiClient.delete(`/animals/${id}`);
+    const response = await apiClient.get(`/posts/${id}`);
+    return {
+      id: response.data.id,
+      name: response.data.title,
+      description: response.data.body,
+      category: 'Пост',
+    };
   },
 };
