@@ -1,48 +1,30 @@
-import { useQuery } from '@tanstack/react-query';
-import { getUsers } from '../api/users';
+import { UserCard } from "../components/UserCard";
+import { getUsers } from "../api/users";
+import {
+  useQuery,
+} from '@tanstack/react-query'
 
-const DUMMY_PICTURE = 'https://thumbs.dreamstime.com/b/none-102846161.jpg?w=768';
+export function UsersPage () {
+    const {data, refetch, isLoading, isFetching} = useQuery({ queryKey: ['users'], queryFn: getUsers });
+    const loading = isFetching || isLoading;
 
-function UsersPage() {
-  const { data, isLoading, isError, error, refetch } = useQuery({
-    queryKey: ['users'],
-    queryFn: getUsers,
-  });
 
-  if (isLoading) {
-    return <h1>Users list loading...</h1>;
-  }
-
-  if (isError) {
-    return <h1>Error: {error instanceof Error ? error.message : 'Unknown error'}</h1>;
-  }
-
-  return (
-    <section id="center">
-      <div>
-        <h1>Users list</h1>
-      </div>
-      <button
-        type="button"
-        className="counter"
-        onClick={() => refetch()}
-      >
-        Update user list
-      </button>
-      <div className="usersContainer">
-        {data?.data.map((user) => (
-          <div key={user.id} className="userCard">
-            <div>{user.firstName} {user.lastName}</div>
+    return (
+       <div>
             <div>
-              {user.avatar?.map((avt) => (
-                <img key={avt.uid} height={100} width={100} src={DUMMY_PICTURE} alt={user.firstName} />
-              ))}
+                <h1>Users list</h1>
+                </div>
+                    <button
+                        type="button"
+                        className="counter"
+                        onClick={() => refetch()}
+                    >
+                    Update user list
+                </button>
+                <div className='usersContainer'>
+                    {loading && <h1>Users list loading...</h1>}
+                    {!loading && data?.data.map((user) => <UserCard {...user} />)}
             </div>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
+       </div>
+    );
 }
-
-export default UsersPage;
