@@ -122,3 +122,16 @@ code {
   border-radius: 12px;
   width: 150px;
 }
+
+.clientsContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.clientCard {
+  background-color: rgb(246, 226, 255);
+  border-radius: 12px;
+  width: 475px;
+}

@@ -6,6 +6,7 @@ import { HomePage } from './pages/HomePage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
 import './App.css'
+import { ClientsPage } from './pages/ClientsPage';
 
 const queryClient = new QueryClient();
 
@@ -19,10 +20,12 @@ function App() {
         <nav>
           <NavLink to="/">Main</NavLink>
           <NavLink to="/users">User List</NavLink>
+          <NavLink to="/clients">Client List</NavLink>
         </nav>
         <Routes>
           <Route path='/' element={<HomePage />} />
           <Route path='/users' element={<UsersPage />} />
+          <Route path='/clients' element={<ClientsPage />} />
           <Route path='*' element={<NotFoundPage />} />
         </Routes>
       </section>
