@@ -7,12 +7,12 @@ export interface OrganizationUser {
   organizations: number[];
 }
 
-// GET /organization_users — получение списка всех пользователей организаций
-export const getOrganizationUsers = async () => {
-  return apiClient.get<OrganizationUser[]>("/organization_users");
+export const getOrganizationUsers = async (): Promise<OrganizationUser[]> => {
+  const response = await apiClient.get<OrganizationUser[]>("/organization_users");
+  return response.data; 
 };
 
-// GET /organization_users/id — получение пользователя организации по id
-export const getOrganizationUserById = async (id: number) => {
-  return apiClient.get<OrganizationUser>(`/organization_users/${id}`);
+export const getOrganizationUserById = async (id: number): Promise<OrganizationUser> => {
+  const response = await apiClient.get<OrganizationUser>(`/organization_users/${id}`);
+  return response.data;
 };
