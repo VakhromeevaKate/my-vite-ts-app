@@ -3,10 +3,21 @@ import { getUsers } from "../api/users";
 import {
   useQuery,
 } from '@tanstack/react-query'
+import { useEffect, useState } from "react";
+import { useUsers } from "../stores/UsersStore";
 
 export function UsersPage () {
+    const [selectedUserId, setSelectedUserId] = useState<number | undefined>()
+
     const {data, refetch, isLoading, isFetching} = useQuery({ queryKey: ['users'], queryFn: getUsers });
     const loading = isFetching || isLoading;
+    const { setUsers } = useUsers();
+
+    useEffect(() => {
+        if (data?.data) {
+            setUsers(data.data)
+        }
+    }, [data])
 
 
     return (
@@ -23,7 +34,13 @@ export function UsersPage () {
                 </button>
                 <div className='usersContainer'>
                     {loading && <h1>Users list loading...</h1>}
-                    {!loading && data?.data.map((user) => <UserCard {...user} />)}
+                    {!loading && data?.data.map((user) => (
+                        <UserCard
+                            {...user}
+                            isSelected={selectedUserId === user.id}
+                            setUserSelected={() => setSelectedUserId(user.id)}
+                        />
+                    ))}
             </div>
        </div>
     );
