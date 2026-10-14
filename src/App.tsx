@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Routes, Route, NavLink } from "react-router-dom";
 
 import { UsersPage } from './pages/UsersPage';
+import { FilesPage } from './pages/filespage';
 import { HomePage } from './pages/HomePage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
@@ -19,10 +20,12 @@ function App() {
         <nav>
           <NavLink to="/">Main</NavLink>
           <NavLink to="/users">User List</NavLink>
+          <NavLink to="/files">Files List</NavLink>
         </nav>
         <Routes>
           <Route path='/' element={<HomePage />} />
           <Route path='/users' element={<UsersPage />} />
+          <Route path='/files' element={<FilesPage />} />
           <Route path='*' element={<NotFoundPage />} />
         </Routes>
       </section>

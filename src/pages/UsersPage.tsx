@@ -32,7 +32,7 @@ export function UsersPage () {
                 </button>
                 <div className='usersContainer'>
                     {loading && <h1>Users list loading...</h1>}
-                    {!loading && data?.data.map((user) => <UserCard {...user} />)}
+                    {!loading && data?.data.map((user) => <UserCard key={user.id} {...user} />)}
             </div>
        </div>
     );
